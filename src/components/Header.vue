@@ -5,7 +5,7 @@ const emoji = ref('🏹')
 
 <template>
     <header>
-        <span>Archery equipment</span>
+        <span>Archery Shopper</span>
         <span>{{emoji}}</span>
     </header>
 </template>
