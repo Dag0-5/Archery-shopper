@@ -1,17 +1,3 @@
-"""
-api.py
-
-A small Flask API that wraps the Search class in backend.py so the
-Table.vue component can fetch archery equipment results over HTTP.
-
-Run with:
-    pip install -r requirements.txt
-    python api.py
-
-Then Table.vue (pointed at http://localhost:5000/search?...) will render
-the results.
-"""
-
 from urllib.parse import urlparse
 
 from flask import Flask, jsonify, request
@@ -21,14 +7,10 @@ from backend import Search
 from file_interactions import find_wordlist
 
 app = Flask(__name__)
-
-# Allow the Vue dev server (usually a different port, e.g. 5173/8080)
-# to call this API. Tighten origins= for production.
 CORS(app)
 
 
 def hostname_from_url(url):
-    """Best-effort 'website' label for a result, e.g. 'example.com'."""
     try:
         host = urlparse(url).hostname or url
         return host[4:] if host.startswith("www.") else host
@@ -78,9 +60,6 @@ def search():
     """
     item = request.args.get("item", "").strip()
     category = request.args.get("category", "recurve_limbs").strip()
-    # The list of sites to crawl is a separate wordlist from the keyword
-    # category used for matching (see backend.py's own test call at the
-    # bottom, which passes these as two different find_wordlist() calls).
     site_list = request.args.get("site_list", "archery_urls").strip()
     max_workers_raw = request.args.get("max_workers", "8").strip()
 

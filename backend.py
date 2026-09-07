@@ -23,13 +23,6 @@ class Search():
         #
         # Searches every site concurrently using a thread pool.
         #
-        # Each site is searched by its own Search() worker instance so that
-        # per-site state (crawl_delay, allow/disallow lists) set while
-        # reading that site's robots.txt doesn't get clobbered by other
-        # threads searching other sites at the same time. self.wordlist
-        # and item are read-only for the duration of the search, so it's
-        # safe to share them across threads.
-        #
         print(category)
         self.wordlist = find_wordlist(category)
         self.item     = item
@@ -54,11 +47,7 @@ class Search():
 
 
     def _search_site_safe(self,url):
-        #
-        # Runs _search_site in a fresh worker instance and never lets an
-        # exception from one site take down the whole thread pool.
-        #
-
+       
         try:
 
             worker          = Search(self.item)
@@ -125,7 +114,6 @@ class Search():
         # Searches this based on if the item matches urls and titles 
         # Returns the best solution
         #
-        #TODO implement html error handling i.e. error 404
         
         time.sleep(self.crawl_delay)
         url_list = map.find_urls()

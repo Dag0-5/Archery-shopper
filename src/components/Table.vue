@@ -2,29 +2,18 @@
 export default {
   name: 'ProductTable',
   props: {
-    // Endpoint that returns an array of products as JSON.
-    // Expected shape (fields can be remapped below): 
-    // [{ title, price, image, website, link }, ...]
     apiUrl: {
       type: String,
       default: 'http://localhost:5000/search'
     },
-    // The product/item to search for, e.g. "Shocq Triumph Recurve Limbs".
-    // Sent to the API as ?item=...
     searchItem: {
       type: String,
       default: ''
     },
-    // Which wordlist/site category to search, e.g. "recurve_limbs".
-    // Sent to the API as ?category=... Acts as the initial value for the
-    // category dropdown; use v-model:category on the parent if you want
-    // to control it there instead.
     category: {
       type: String,
       default: 'recurve_limbs'
     },
-    // Options shown in the category dropdown. Each 'value' should match
-    // a wordlist category your backend's find_wordlist() understands.
     categories: {
       type: Array,
       default: () => ([
@@ -42,18 +31,14 @@ export default {
         { value: 'armguards', label: 'Armguards' },
       ])
     },
-    // Optional: pass products directly instead of (or in addition to) fetching.
-    // Useful for SSR, tests, or when the parent already has the data.
     products: {
       type: Array,
       default: null
     },
-    // Optional fetch options (headers, auth, etc.)
     fetchOptions: {
       type: Object,
       default: () => ({})
     },
-    // Auto-fetch on mount if apiUrl is provided
     autoFetch: {
       type: Boolean,
       default: true
@@ -108,7 +93,6 @@ export default {
     }
   },
   watch: {
-    // Allow parent-provided products to update the table reactively
     products: {
       immediate: true,
       handler(newVal) {
@@ -123,8 +107,6 @@ export default {
       }
     },
     category(newVal) {
-      // Parent changed the prop (e.g. via v-model:category) — keep the
-      // dropdown in sync without re-triggering itself in a loop.
       if (newVal !== this.selectedCategory) {
         this.selectedCategory = newVal;
       }
@@ -148,8 +130,6 @@ export default {
   },
   methods: {
     normalize(rawList) {
-      // Adjust these mappings if your API uses different field names,
-      // e.g. p.name instead of p.title, or p.url instead of p.link.
       return rawList.map((p, i) => ({
         id: p.id ?? i,
         title: p.title ?? p.name ?? 'Untitled',
