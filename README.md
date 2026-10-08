@@ -1,40 +1,16 @@
-# Webscraper project
+# Archery Shopper
 
+This is a shopping tool designed to help me find the best prices on archery gear. 
+It works by checking certain websites found in the archery urls file for the closest match to the name and type of the item and returning related information.
+It either checks the sites by searching their sitemaps or, when none is found, searching the site itself.
 # .
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
 
 ## Project Setup
 
-```sh
-npm install
-```
+Use the run.ps1 file to install the requirements and run the system. This should present a link to a localhost address.
+Press this link to be taken to the site.
 
-### Compile and Hot-Reload for Development
+## Future developments
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+This project may be expanded and moved to its own server instead of using localhost.
