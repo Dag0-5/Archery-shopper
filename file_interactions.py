@@ -6,7 +6,9 @@ import datetime
 # functions used for file interactions
 
 def find_wordlist(category):
-        
+    #
+    # Finds the wordlist for the given category
+    #    
     wordlist  = list()
     path      = ("/wordlists/" + category + ".txt")
     wordlist = file_reader(path)    
@@ -14,7 +16,9 @@ def find_wordlist(category):
 
 
 def file_reader(path):
-
+    # 
+    # Returns the content of the file at the given subdirectory
+    #
     path    = getcwd() + path
     path    = path.replace("\\", "/")
     content = list()
@@ -29,7 +33,13 @@ def file_reader(path):
 
 
 def check_from_word_list(wordlist,search_list,single,high_value_phrase=None,position=0):
-
+    #
+    # Checks the given phrases in the search list against the wordlist
+    # Scores each phrase based on the number of matches found
+    # If a high value phrase is given, returns if a perfect match for that phrase is found
+    # High value phrases are used to prevent unnecessary searching
+    # Position indicates the expected location of the phrase in the object in the search list
+    #
     return_list = list()
     pattern     = re.compile('|'.join(re.escape(w) for w in wordlist))
 
@@ -76,7 +86,10 @@ def check_from_word_list(wordlist,search_list,single,high_value_phrase=None,posi
 
 
 def export(collection):
-
+    # 
+    # Exports the results of the search to a csv
+    # Used for logging and debugging
+    #
     timestamp = str(datetime.datetime.now())
     timestamp = timestamp[:timestamp.find(".")]
     timestamp = timestamp.replace(" ","-")

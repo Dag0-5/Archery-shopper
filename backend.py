@@ -47,7 +47,10 @@ class Search():
 
 
     def _search_site_safe(self,url):
-       
+        # 
+        # Worker used to search the given site
+        # Returns the result of the search
+        # 
         try:
 
             worker          = Search(self.item)
@@ -63,7 +66,10 @@ class Search():
 
 
     def _search_site(self,url):
-
+        #
+        # Dictates which search will be used for the current site
+        # Returns the result of the search
+        #  
         start = time.time()
 
         robot = robots.find_robots(url)
@@ -114,7 +120,6 @@ class Search():
         # Searches this based on if the item matches urls and titles 
         # Returns the best solution
         #
-        
         time.sleep(self.crawl_delay)
         url_list = map.find_urls()
         url_list = self.remove_disallowed(url_list)
@@ -176,13 +181,22 @@ class Search():
 
     
     def no_sitemap_search(self,page):
-
+        #
+        # Searches the site for the closest matches to the desired url
+        # Orders them based on how many keywords are in url
+        # Searches the closest page based on this
+        # Repeats the seacrh until no better pages are found or a perfect match is found 
+        # Returns the best solution
+        #
         if(page.soup == None):
 
             page.find_soup()
 
         if(len(page.get_previous())>10):
-
+            #
+            # Stops searching beyond a depth of 10 pages
+            # Used to try and prevent infinite searching
+            #
            return False, pages.Page("")
         
         time.sleep(self.crawl_delay)
@@ -192,7 +206,9 @@ class Search():
         other = page.parent
 
         while (other != None):
-
+            #
+            # Makes sure that the new page has not been searched yet
+            #
             if(page.compare_pages(other)):
 
                 return False,pages.Page("")
@@ -208,7 +224,9 @@ class Search():
         previous = page.get_previous()
         
         for url in list(page.url_list):
-
+            #
+            # Removes any previously searched pages
+            #
             for p in previous:
 
                 if p == url:
@@ -222,7 +240,9 @@ class Search():
             possible_matches = check_from_word_list(self.wordlist,page.url_list,True,self.item) 
         
             while (possible_matches != []):
-
+                #
+                # Creates new page objects for all valid pages that will be searched
+                #
                 pair  = heapq.heappop(possible_matches)
                 child = pages.Page(pair[1],page,pair[0])
                 children.append(child)
@@ -269,7 +289,10 @@ class Search():
 
 
     def check_matches(self,match_list,sitemap_search):
-        
+        #
+        # Checks to see if any of the matches are the desired page
+        # Returns the desired page information if so
+        #
         while (match_list != []):
 
             if(sitemap_search):
@@ -318,7 +341,9 @@ class Search():
 
 
     def get_details(self,match,sitemap_search,link,title):
-
+        #
+        # Returns the details from the page
+        #
         if(sitemap_search):
             
             page  = pages.Page(link)
@@ -339,7 +364,9 @@ class Search():
 
 
     def remove_disallowed(self,url_list,single=False):
-
+        #
+        # Removes the disallowed pages from the given list
+        #  
         if (self.disallow != []):
 
             disallowed_pattern = re.compile('|'.join(re.escape(w) for w in self.disallow))
@@ -360,7 +387,9 @@ class Search():
 
         return url_list
 
-
+#
+# Used for testing
+#
 if __name__ == "__main__":
     start = time.time()
     test = Search()
