@@ -3,8 +3,6 @@
 This is a shopping tool designed to help me find the best prices on archery gear. 
 It works by checking certain websites found in the archery urls file for the closest match to the name and type of the item and returning related information.
 It either checks the sites by searching their sitemaps or, when none is found, searching the site itself.
-# .
-
 
 ## Project Setup
 
