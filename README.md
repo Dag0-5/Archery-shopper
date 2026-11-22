@@ -12,3 +12,12 @@ Press this link to be taken to the site.
 ## Future developments
 
 This project may be expanded and moved to its own server instead of using localhost.
+
+## Known issues
+
+#### Sometimes prices will display £0.00 even thought the site is found. 
+This is usually due to being rate limited. Wait and then try again
+
+#### A product is shown that has no relation to the item searched for. 
+This is usually due to a search stopping early due to no match being found.
+Try again with a more detailed name. Some sites may not stock the item being searched for. 
