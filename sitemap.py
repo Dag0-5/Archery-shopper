@@ -13,9 +13,9 @@ class Sitemap:
         self.parent   = parent
 
     def find_urls(self):
-        # 
-        # Finds all urls and their important info on the sitemap
-        # 
+        """ 
+        Finds all urls and their important info on the sitemap
+        """
         session        = requests.session()
         sitemap        = session.get(self.map)
         soup           = BeautifulSoup(sitemap.text,"xml")
@@ -35,9 +35,9 @@ class Sitemap:
         return urls
 
     def find_sitemaps(self):
-        #
-        # Finds all sitemaps on the sitemap
-        #
+        """
+        Finds all sitemaps on the sitemap
+        """
         sitemaps           = list()
         session            = requests.session()
         sitemap            = session.get(self.map)
@@ -65,9 +65,9 @@ class Sitemap:
         self.children = sitemaps
 
     def find_images(self):
-        #
-        # Returns all images on sitemap
-        #  
+        """
+        Returns all images on sitemap
+        """  
         session          = requests.session()
         sitemap          = session.get(self.map)
         soup             = BeautifulSoup(sitemap.text,"xml")
@@ -81,10 +81,10 @@ class Sitemap:
         return images
 
     def find_title(self,tag):
-        #
-        # Returns the title of the image on the page
-        # Usually the same as the title of the item
-
+        """
+        Returns the title of the image on the page
+        Usually the same as the title of the item
+        """
         title = tag.find("image:title")
 
         if(title != None):
@@ -97,10 +97,10 @@ class Sitemap:
         
 
     def find_default_image(self,tag):
-        #
-        # Returns the first image in the tag
-        # Usually the same as the default image on display    
-        #
+        """
+        Returns the first image in the tag
+        Usually the same as the default image on display    
+        """
         image = tag.find("image:loc")
 
         if(image != None):
@@ -113,10 +113,10 @@ class Sitemap:
 
 
     def find_link(self,tag):
-        #
-        # Returns the contents of the first loc in the tag
-        # Usually the url to the page 
-        #
+        """
+        Returns the contents of the first loc in the tag
+        Usually the url to the page 
+        """
         loc = tag.find("loc")
 
         if(loc != None):

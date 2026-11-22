@@ -1,9 +1,9 @@
 import requests
 
 def find_sitemap(robots):
-    # 
-    # Finds the sitemap on the robots.txt page
-    #  
+    """ 
+    Finds the sitemap on the robots.txt page
+    """ 
     for line in robots.splitlines():
 
         if "Sitemap" in line:
@@ -13,9 +13,9 @@ def find_sitemap(robots):
     return None
 
 def find_robots(url):
-    #
-    # Returns the robots.txt page for the current webbsite
-    #  
+    """
+    Returns the robots.txt page for the current webbsite
+    """  
     try:
 
         session = requests.session()
@@ -27,9 +27,9 @@ def find_robots(url):
         return None
 
 def find_allow_disallow_list(robots):
-    #
-    # Finds the allow and disallow lists for the current website
-    #  
+    """
+    Finds the allow and disallow lists for the current website
+    """  
     disallow = list()
     allow    = list()
     agent_found = False
@@ -57,9 +57,9 @@ def find_allow_disallow_list(robots):
     return allow,disallow
 
 def find_crawl_delay(robots):
-    #
-    # Finds the crawl delay for the current website
-    #  
+    """
+    Finds the crawl delay for the current website
+    """  
     delay       = 10
     agent_found = False
 

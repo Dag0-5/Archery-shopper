@@ -20,9 +20,9 @@ class Search():
 
     
     def search(self,category,sites,item=None,max_workers=8):
-        #
-        # Searches every site concurrently using a thread pool.
-        #
+        """
+        Searches every site concurrently using a thread pool
+        """
         print(category)
         self.wordlist = find_wordlist(category)
         self.item     = item
@@ -47,10 +47,10 @@ class Search():
 
 
     def _search_site_safe(self,url):
-        # 
-        # Worker used to search the given site
-        # Returns the result of the search
-        # 
+        """ 
+        Worker used to search the given site
+        Returns the result of the search
+        """ 
         try:
 
             worker          = Search(self.item)
@@ -66,10 +66,10 @@ class Search():
 
 
     def _search_site(self,url):
-        #
-        # Dictates which search will be used for the current site
-        # Returns the result of the search
-        #  
+        """
+        Dictates which search will be used for the current site
+        Returns the result of the search
+        """  
         start = time.time()
 
         robot = robots.find_robots(url)
@@ -114,12 +114,12 @@ class Search():
 
 
     def sitemap_search(self,map):
-        #
-        # Searches the sitemap for all possible matches
-        # Orders them based on how many keywords are in url
-        # Searches this based on if the item matches urls and titles 
-        # Returns the best solution
-        #
+        """
+        Searches the sitemap for all possible matches
+        Orders them based on how many keywords are in url
+        Searches this based on if the item matches urls and titles 
+        Returns the best solution
+        """
         time.sleep(self.crawl_delay)
         url_list = map.find_urls()
         url_list = self.remove_disallowed(url_list)
@@ -181,13 +181,13 @@ class Search():
 
     
     def no_sitemap_search(self,page):
-        #
-        # Searches the site for the closest matches to the desired url
-        # Orders them based on how many keywords are in url
-        # Searches the closest page based on this
-        # Repeats the seacrh until no better pages are found or a perfect match is found 
-        # Returns the best solution
-        #
+        """
+        Searches the site for the closest matches to the desired url
+        Orders them based on how many keywords are in url
+        Searches the closest page based on this
+        Repeats the seacrh until no better pages are found or a perfect match is found 
+        Returns the best solution
+        """
         if(page.soup == None):
 
             page.find_soup()
@@ -289,10 +289,10 @@ class Search():
 
 
     def check_matches(self,match_list,sitemap_search):
-        #
-        # Checks to see if any of the matches are the desired page
-        # Returns the desired page information if so
-        #
+        """
+        Checks to see if any of the matches are the desired page
+        Returns the desired page information if so
+        """
         while (match_list != []):
 
             if(sitemap_search):
@@ -341,9 +341,9 @@ class Search():
 
 
     def get_details(self,match,sitemap_search,link,title):
-        #
-        # Returns the details from the page
-        #
+        """
+        Returns the details from the page
+        """
         if(sitemap_search):
             
             page  = pages.Page(link)
@@ -364,9 +364,9 @@ class Search():
 
 
     def remove_disallowed(self,url_list,single=False):
-        #
-        # Removes the disallowed pages from the given list
-        #  
+        """
+        Removes the disallowed pages from the given list
+        """  
         if (self.disallow != []):
 
             disallowed_pattern = re.compile('|'.join(re.escape(w) for w in self.disallow))

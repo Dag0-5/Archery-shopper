@@ -18,18 +18,18 @@ class Page():
         self.url_list = list()
 
     def find_soup(self):
-        #
-        # Retrieves the page and creates a soup for use when searching the page
-        #
+        """
+        Retrieves the page and creates a soup for use when searching the page
+        """
         self.page = self.session.get(self.url)
         self.soup = BeautifulSoup(self.page.text,"html.parser")
 
         
     def find_urls(self):
-        # 
-        # Finds all urls on a given page
-        # Banned and must_contain are used to filter the results
-        #
+        """ 
+        Finds all urls on a given page
+        Banned and must_contain are used to filter the results
+        """
         must_contain = find_wordlist("url_must_contains")
         banned       = find_wordlist("url_banned")
 
@@ -51,9 +51,9 @@ class Page():
 
         
     def find_next_pages(self):
-        #
-        # Finds any possible links to next pages on the current page
-        #
+        """
+        Finds any possible links to next pages on the current page
+        """
         wordlist   = find_wordlist("next_page")
         next_pages = check_from_word_list(wordlist,self.url_list,True)
 
@@ -75,10 +75,10 @@ class Page():
 
 
     def find_price(self):
-        #
-        # Finds the price of an item on the current page
-        # Will return the first price found 
-        #  
+        """
+        Finds the price of an item on the current page
+        Will return the first price found 
+        """  
         price = self.soup.find(class_=re.compile("price"))
 
         if(price == None):
@@ -107,11 +107,9 @@ class Page():
 
 
     def find_options(self):
-        # Finds options on the current page
-        # TODO improve
-        # Current system only works for 4 websites, needs to be expanded
-        #
-       
+        """ 
+        Finds options on the current page
+        """
         options           = list()
         options_cluttered = list()
         successful        = list()
@@ -146,10 +144,10 @@ class Page():
 
 
     def get_option_text(self,phrase,tag_list):
-        #
-        # Finds any text in the options found on the page
-        # Limited in scope as it only currently works for 4 websites that I have tried
-        #  
+        """
+        Finds any text in the options found on the page
+        Limited in scope as it only currently works for 4 websites that I have tried
+        """
         new_list = list()
 
         if (phrase == "product-content"):
@@ -180,9 +178,9 @@ class Page():
 
 
     def find_title(self):
-        #
-        # Finds a title for the page by converting the end of the url
-        #  
+        """
+        Finds a title for the page by converting the end of the url
+        """  
         remove_list = [".html","-en"]
         last        = self.url.rfind("/")
         title       = self.url[last+1:]
@@ -204,10 +202,10 @@ class Page():
 
 
     def find_image(self):
-        # 
-        # Finds the image of the product on the page
-        # Returns the second image as the first is sometimes a logo
-        #  
+        """ 
+        Finds the image of the product on the page
+        Returns the second image as the first is sometimes a logo
+        """  
         blacklist    = find_wordlist("image_blacklist")
         must_contain = find_wordlist("url_must_contains")
         
@@ -232,9 +230,9 @@ class Page():
 
 
     def get_previous(self):
-        #
-        # Returns all pages visited prior to this one in the search tree
-        #  
+        """
+        Returns all pages visited prior to this one in the search tree
+        """  
         ancestors = [self.url]
         parent    = self.parent
 
@@ -246,7 +244,7 @@ class Page():
         return ancestors
 
     def compare_pages(self,other_page):
-        #
-        # Attempts to check if 2 pages are identical based on their contents
-        #
+        """
+        Attempts to check if 2 pages are identical based on their contents
+        """
         return (self.soup.text==other_page.soup.text)
